@@ -10,7 +10,6 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <h3 class="text-lg font-semibold mb-4">{{ __("Bienvenue dans votre espace de gestion !") }}</h3>
-
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         <a href="{{ route('boxes.index') }}" class="block p-6 bg-blue-100 rounded-lg hover:bg-blue-200 transition-colors">
                             <h4 class="font-bold">Gestion des box</h4>
