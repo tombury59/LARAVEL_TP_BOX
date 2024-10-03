@@ -18,7 +18,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/boxes', [BoxesController::class, 'index'])->name('boxes.index');
-    Route::get('/boxes', [BoxesController::class, 'index'])->name('boxes.show');
+    Route::get('/boxe/{id}', [BoxesController::class, 'show'])->name('boxes.show');
+
+    Route::get('/boxe/edit/{id}', [BoxesController::class, 'view_edit'])->name('boxes.edit');
+    Route::put('/boxe/edit/{id}', [BoxesController::class, 'edit'])->name('boxes.edit');
 });
 
 require __DIR__.'/auth.php';
