@@ -52,4 +52,12 @@ class BoxesController extends Controller
         return view('boxe.boxe-edit', compact('boxe'));
     }
 
+    public function destroy(Request $request)
+    {
+        $user = auth()->user();
+        $boxe = $user->boxes()->findOrFail($request->id);
+        $boxe->delete();
+        return redirect()->route('boxes.index');
+    }
+
 }

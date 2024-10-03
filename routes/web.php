@@ -22,6 +22,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/boxe/edit/{id}', [BoxesController::class, 'view_edit'])->name('boxes.edit');
     Route::put('/boxe/edit/{id}', [BoxesController::class, 'edit'])->name('boxes.edit');
+    Route::delete('/boxe/{id}', [BoxesController::class, 'destroy'])->name('boxes.destroy');
 });
 
 require __DIR__.'/auth.php';
