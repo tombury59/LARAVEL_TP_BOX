@@ -17,7 +17,7 @@ class BoxesFactory extends Factory
     public function definition(): array
     {
         return [
-            'user_id' => 1,
+            'proprietaire_id' => 1,
             'name' => $this->faker->name,
             'description' => $this->faker->sentence,
             'address' => $this->faker->address,
