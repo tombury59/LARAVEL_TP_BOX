@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Boxes;
 use App\Models\Locataires;
 use App\Models\Reserverboxes;
+use App\Models\Typepayement;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -28,5 +29,7 @@ class DatabaseSeeder extends Seeder
         Locataires::factory(20)->create();
 
         Reserverboxes::factory(10)->create();
+
+        Typepayement::factory(5)->create();
     }
 }

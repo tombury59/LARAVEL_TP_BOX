@@ -12,7 +12,8 @@ class BoxesController extends Controller
         $userId = auth()->id();
         $boxes = Boxes::where('proprietaire_id', $userId)->paginate(6);
         return view('boxe.boxes', ['boxes' => $boxes]);
-    }
+
+     }
 
     public function show(Request $request)
     {

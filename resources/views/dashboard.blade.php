@@ -16,7 +16,7 @@
                             <p class="text-sm">Gérez vos box de stockage</p>
                         </a>
 {{--                        {{ route('tenants.index') }}--}}
-                        <a href="" class="block p-6 bg-green-100 rounded-lg hover:bg-green-200 transition-colors">
+                        <a href="{{route('locataires.index')}}" class="block p-6 bg-green-100 rounded-lg hover:bg-green-200 transition-colors">
                             <h4 class="font-bold">Gestion des locataires</h4>
                             <p class="text-sm">Gérez vos locataires</p>
                         </a>

@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('ville');
             $table->string('code_postal');
             $table->string('pays');
+            $table->foreignId('payement')->constrained();
             $table->timestamps();
         });
     }

@@ -9,7 +9,6 @@ class LocatairesController extends Controller
 {
     public function index()
     {
-        //corriger la pagination
         $locataires=Locataires::paginate(12);
         return view('locataire.locataires',compact('locataires'));
     }
