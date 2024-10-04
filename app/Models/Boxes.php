@@ -20,6 +20,7 @@ class Boxes extends Model
         'address',
         'price',
         'status',
+        'taille',
     ];
 
     public function user()

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('address');
             $table->integer('price');
             $table->boolean('status')->default('1');
+            $table->integer('taille');
         });
     }
 

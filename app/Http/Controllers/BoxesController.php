@@ -85,6 +85,7 @@ class BoxesController extends Controller
         $boxe->address = $request->address;
         $boxe->price = $request->price;
         $boxe->status = $status;
+        $boxe->taille = $request->taille;
         $boxe->save();
         session()->flash('success', 'La boîte à bien été modifiée.');
 

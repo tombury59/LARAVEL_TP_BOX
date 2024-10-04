@@ -23,6 +23,8 @@ class BoxesFactory extends Factory
             'address' => $this->faker->address,
             'price' => $this->faker->numberBetween(100, 1000),
             'status' => 1,
+
+            'taille' => $this->faker->numberBetween(1, 100),
         ];
     }
 }
