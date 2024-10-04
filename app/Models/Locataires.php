@@ -23,4 +23,15 @@ class Locataires extends Model
         'code_postal',
         'pays'
     ];
+
+    //dans la table ReserverBoxes id locataire_id box_id date_debut date_fin
+    public function boxes()
+    {
+        return $this->belongsToMany(Boxes::class, 'reserver_boxes', 'locataire_id', 'box_id')->withPivot('date_debut', 'date_fin');
+    }
+
+    public function reservation()
+    {
+        return $this->hasMany(ReserverBoxes::class, 'locataire_id', 'locataire_id');
+    }
 }

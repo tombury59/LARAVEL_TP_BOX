@@ -43,9 +43,7 @@
                                     <div class="flex items-center text-gray-500 mb-2">
                                         {{ $locataire->telephone }}
                                     </div>
-{{--                                    <div class="text-gray-500">--}}
-{{--                                        {{ $locataire->adresse }}, {{ $locataire->ville }}, {{ $locataire->code_postal }}, {{ $locataire->pays }}--}}
-{{--                                    </div>--}}
+
                                 </div>
                             </div>
                         @empty
@@ -53,6 +51,9 @@
                                 Aucun locataire disponible pour le moment.
                             </div>
                         @endforelse
+                    </div>
+                    <div class="mt-8">
+                        {{ $locataires->links() }}
                     </div>
 
                 </div>
