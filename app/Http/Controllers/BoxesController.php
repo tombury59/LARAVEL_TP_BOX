@@ -65,24 +65,34 @@ class BoxesController extends Controller
         $user = auth()->user();
 
         $boxe = $user->boxes()->where('box_id',$request->id)->first();
+
+
         if(!$boxe)
         {
             session()->flash('error', "Vous n'avez pas accès à cette boxe");
-
             return redirect()->route('boxes.index');
         }
 
-        if($boxe)
-        {
-            $boxe->name = $request->name;
-            $boxe->description = $request->description;
-            $boxe->address = $request->address;
-            $boxe->price = $request->price;
-            $boxe->save();
-            session()->flash('success', 'Boxe updated successfully.');
+        if($request->status =="on") {
+            $status = 1;
+        }
+        else {
+            $status = 0;
         }
 
-        return view('boxe.boxe-edit', compact('boxe'));
+        $boxe->name = $request->name;
+        $boxe->description = $request->description;
+        $boxe->address = $request->address;
+        $boxe->price = $request->price;
+        $boxe->status = $status;
+        $boxe->save();
+        session()->flash('success', 'La boîte à bien été modifiée.');
+
+//        return view('boxe.boxe-edit', compact('boxe'));
+
+        return redirect()->route('boxes.show', ['id' => $boxe->box_id]);
+//        return redirect()->route('boxes.index');
+
     }
 
     public function destroy(Request $request)

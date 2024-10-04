@@ -10,8 +10,6 @@ class Locataires extends Model
     use HasFactory;
 
     protected $table = 'locataires';
-
-//primary key locataire_id
     protected $primaryKey = 'locataire_id';
     protected $fillable = [
         'nom',
@@ -24,7 +22,6 @@ class Locataires extends Model
         'pays'
     ];
 
-    //dans la table ReserverBoxes id locataire_id box_id date_debut date_fin
     public function boxes()
     {
         return $this->belongsToMany(Boxes::class, 'reserver_boxes', 'locataire_id', 'box_id')->withPivot('date_debut', 'date_fin');
