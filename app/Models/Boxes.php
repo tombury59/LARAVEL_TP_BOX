@@ -11,10 +11,10 @@ class Boxes extends Model
     use HasFactory;
 
     public $timestamps = false;
-
+    protected $primaryKey = 'box_id';
     protected $table = 'boxes';
     protected $fillable = [
-        'user_id',
+        'proprietaire_id',
         'name',
         'description',
         'address',

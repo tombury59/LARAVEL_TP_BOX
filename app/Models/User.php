@@ -47,6 +47,7 @@ class User extends Authenticatable
 
     public function boxes()
     {
-        return $this->hasMany(Boxes::class);
+        //la clé primaire de la table users est id et la clé étrangère de la table boxes est proprietaire_id
+        return $this->hasMany(Boxes::class, 'proprietaire_id', 'id');
     }
 }
