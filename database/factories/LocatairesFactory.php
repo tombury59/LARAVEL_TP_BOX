@@ -24,6 +24,7 @@ class LocatairesFactory extends Factory
             'adresse' => $this->faker->address(),
             'ville' => $this->faker->city(),
             'code_postal' => $this->faker->postcode(),
+            'pays' => $this->faker->country(),
         ];
     }
 }

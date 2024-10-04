@@ -10,6 +10,9 @@ class Locataires extends Model
     use HasFactory;
 
     protected $table = 'locataires';
+
+//primary key locataire_id
+    protected $primaryKey = 'locataire_id';
     protected $fillable = [
         'nom',
         'prenom',
@@ -18,5 +21,6 @@ class Locataires extends Model
         'adresse',
         'ville',
         'code_postal',
+        'pays'
     ];
 }

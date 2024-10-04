@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BoxesController;
+use App\Http\Controllers\LocatairesController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -23,6 +24,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/boxe/edit/{id}', [BoxesController::class, 'view_edit'])->name('boxes.edit');
     Route::put('/boxe/edit/{id}', [BoxesController::class, 'edit'])->name('boxes.edit');
     Route::delete('/boxe/{id}', [BoxesController::class, 'destroy'])->name('boxes.destroy');
+
+
+    Route::get('/locataires',[LocatairesController::class, 'index'])->name('locataires.index');
+    Route::get('/locataire/{id}',[LocatairesController::class, 'show'])->name('locataires.show');
+
+
+
+
+
 });
 
 require __DIR__.'/auth.php';
