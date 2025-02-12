@@ -47,6 +47,6 @@ class User extends Authenticatable
 
     public function boxes()
     {
-        return $this->hasMany(Boxes::class);
+        return $this->hasMany(Boxes::class, 'proprietaire_id', 'id');
     }
 }

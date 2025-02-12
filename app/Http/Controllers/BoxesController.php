@@ -2,20 +2,29 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Boxes;
 use Illuminate\Http\Request;
 
 class BoxesController extends Controller
 {
     public function index()
     {
-        $boxes = auth()->user()->boxes()->paginate(6);
+        $userId = auth()->id();
+        $boxes = Boxes::where('proprietaire_id', $userId)->paginate(6);
         return view('boxe.boxes', ['boxes' => $boxes]);
-    }
 
-    public function show(Request $request)
+     }
+
+    public function show(Request $request, $id)
     {
         $user = auth()->user();
-        $boxe = $user->boxes()->findOrFail($request->id);
+
+        $boxe = $user->boxes()->where('id', $id)->first();
+
+        if (!$boxe) {
+            session()->flash('error', "Vous n'avez pas accès à cette boxe");
+            return redirect()->route('boxes.index');
+        }
 
         // Récupérer la boxe précédente
         $previousBox = $user->boxes()
@@ -35,27 +44,60 @@ class BoxesController extends Controller
     public function view_edit(Request $request)
     {
         $user = auth()->user();
-        $boxe = $user->boxes()->findOrFail($request->id);
+//        dd($user-boxes()->$request->id);
+
+
+        $boxe = $user->boxes()->where('id',$request->id)->first();
+        if(!$boxe)
+        {
+            session()->flash('error', "Vous n'avez pas accès à cette boxe");
+
+            return redirect()->route('boxes.index');
+        }
         return view('boxe.boxe-edit', compact('boxe'));
     }
 
     public function edit(Request $request)
     {
         $user = auth()->user();
-        $boxe = $user->boxes()->findOrFail($request->id);
+
+        $boxe = $user->boxes()->where('id',$request->id)->first();
+
+
+        if(!$boxe)
+        {
+            session()->flash('error', "Vous n'avez pas accès à cette boxe");
+            return redirect()->route('boxes.index');
+        }
+
+        if($request->status =="on") {
+            $status = 1;
+        }
+        else {
+            $status = 0;
+        }
+
         $boxe->name = $request->name;
         $boxe->description = $request->description;
         $boxe->address = $request->address;
         $boxe->price = $request->price;
+        $boxe->status = $status;
+        $boxe->taille = $request->taille;
         $boxe->save();
+        session()->flash('success', 'La boîte à bien été modifiée.');
 
-        return view('boxe.boxe-edit', compact('boxe'));
+//        return view('boxe.boxe-edit', compact('boxe'));
+
+        return redirect()->route('boxes.show', ['id' => $boxe->id]);
+//        return redirect()->route('boxes.index');
+
     }
 
     public function destroy(Request $request)
     {
         $user = auth()->user();
-        $boxe = $user->boxes()->findOrFail($request->id);
+        $boxe = $user->boxes()->where('id',$request->id)->first();
+        session()->flash('success', 'Boxe deleted successfully.');
         $boxe->delete();
         return redirect()->route('boxes.index');
     }

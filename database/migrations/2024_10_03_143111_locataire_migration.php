@@ -1,5 +1,4 @@
 <?php
-
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,6 +19,8 @@ return new class extends Migration
             $table->string('adresse');
             $table->string('ville');
             $table->string('code_postal');
+            $table->string('pays');
+            $table->foreignId('payement')->constrained('type_payement')->onDelete('cascade');
             $table->timestamps();
         });
     }

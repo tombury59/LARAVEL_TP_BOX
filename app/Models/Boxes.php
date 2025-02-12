@@ -11,20 +11,27 @@ class Boxes extends Model
     use HasFactory;
 
     public $timestamps = false;
-
+    protected $primaryKey = 'id';
     protected $table = 'boxes';
     protected $fillable = [
-        'user_id',
+        'proprietaire_id',
         'name',
         'description',
         'address',
         'price',
         'status',
+        'taille',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
+
+    public function proprietaire()
+    {
+        return $this->belongsTo(User::class, 'proprietaire_id');
+    }
+
 
 }
