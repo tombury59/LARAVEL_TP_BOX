@@ -22,7 +22,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('boxes.edit', ['id' => $boxe->box_id]) }}" method="POST">
+                    <form action="{{ route('boxes.edit', ['id' => $boxe->id]) }}" method="POST">
                         @csrf
                         @method('PUT')
 

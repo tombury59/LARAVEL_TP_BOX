@@ -10,7 +10,7 @@ class Locataires extends Model
     use HasFactory;
 
     protected $table = 'locataires';
-    protected $primaryKey = 'locataire_id';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'nom',
         'prenom',
@@ -24,11 +24,11 @@ class Locataires extends Model
 
     public function boxes()
     {
-        return $this->belongsToMany(Boxes::class, 'reserver_boxes', 'locataire_id', 'box_id')->withPivot('date_debut', 'date_fin');
+        return $this->belongsToMany(Boxes::class, 'reserver_boxes', 'id', 'box_id')->withPivot('date_debut', 'date_fin');
     }
 
     public function reservation()
     {
-        return $this->hasMany(ReserverBoxes::class, 'locataire_id', 'locataire_id');
+        return $this->hasMany(ReserverBoxes::class, 'locataire_id', 'id');
     }
 }

@@ -62,7 +62,7 @@
                                                                                                                                                                                           stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17a2 2 0 100-4zM9 5v12M4 8l5 5v-3zM20 8l-5 5v-3z"></path></svg>
                                                     </div>
                                                     <div class="flex flex-col">
-                                                        <a href="/boxe/{{ $boxeslocataire->box_id }}" class="text-blue-500 hover:underline">
+                                                        <a href="/boxe/{{ $boxeslocataire->id }}" class="text-blue-500 hover:underline">
                                                             {{ $boxeslocataire->name }}
                                                         </a>
                                                         <p class="flex items-center text-gray-600">

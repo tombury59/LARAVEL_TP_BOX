@@ -6,12 +6,12 @@
             </h2>
             <div class="flex space-x-4">
                 @if($previousBox)
-                    <a href="{{ route('boxes.show', $previousBox->box_id) }}" class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300">
+                    <a href="{{ route('boxes.show', $previousBox->id) }}" class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300">
                         &larr; Précédente
                     </a>
                 @endif
                 @if($nextBox)
-                    <a href="{{ route('boxes.show', $nextBox->box_id) }}" class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300">
+                    <a href="{{ route('boxes.show', $nextBox->id) }}" class="px-3 py-1 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300">
                         Suivante &rarr;
                     </a>
                 @endif
@@ -72,9 +72,9 @@
                         <div class="flex flex-wrap gap-4">
                             <a href="{{ route('boxes.index') }}" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md hover:bg-gray-300 transition-colors duration-300">Retour à la liste</a>
 
-                            <a href="{{ route('boxes.edit', $boxe->box_id) }}" class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors duration-300">Modifier</a>
+                            <a href="{{ route('boxes.edit', $boxe->id) }}" class="px-4 py-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 transition-colors duration-300">Modifier</a>
 
-                            <form action="{{ route('boxes.destroy', $boxe->box_id) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette boxe ?');" class="inline">
+                            <form action="{{ route('boxes.destroy', $boxe->id) }}" method="POST" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette boxe ?');" class="inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors duration-300">Supprimer</button>
