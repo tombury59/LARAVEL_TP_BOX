@@ -3,6 +3,7 @@
 use App\Http\Controllers\BoxesController;
 use App\Http\Controllers\LocatairesController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReservationsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,12 +19,22 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+
+    Route::get('/boxe/create', [BoxesController::class, 'create'])->name('boxes.create');
+    Route::post('/boxe', [BoxesController::class, 'store'])->name('boxes.store');
     Route::get('/boxes', [BoxesController::class, 'index'])->name('boxes.index');
     Route::get('/boxe/{id}', [BoxesController::class, 'show'])->name('boxes.show');
-
+    Route::post('/boxe', [BoxesController::class, 'store'])->name('boxes.store');
     Route::get('/boxe/edit/{id}', [BoxesController::class, 'view_edit'])->name('boxes.edit');
     Route::put('/boxe/edit/{id}', [BoxesController::class, 'edit'])->name('boxes.edit');
     Route::delete('/boxe/{id}', [BoxesController::class, 'destroy'])->name('boxes.destroy');
+
+    //réservation des boxes
+    Route::get('/reservations', [ReservationsController::class, 'index'])->name('reservations.reservations');
+    Route::delete('/reservations/{id}', [ReservationsController::class, 'destroy'])->name('reservations.destroy');
+    Route::post('/reservations', [ReservationsController::class, 'store'])->name('reservations.store');
+
+
 
 
     Route::get('/locataires',[LocatairesController::class, 'index'])->name('locataires.index');

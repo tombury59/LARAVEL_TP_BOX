@@ -38,5 +38,13 @@ class Boxes extends Model
         return $this->hasMany(Reserverboxes::class,'box_id');
     }
 
+    public function dernierReservationActive()
+    {
+        // Return the query builder instance for the active reservation
+        return $this->reservations()
+            ->where('date_fin', '>=', now())
+            ->where('date_debut', '<=', now());
+    }
+
 
 }

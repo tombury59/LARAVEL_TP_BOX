@@ -21,6 +21,9 @@
                     <x-nav-link :href="route('locataires.index')" :active="request()->routeIs('locataires.index')">
                         {{ __('Locataires') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('reservations.reservations')" :active="request()->routeIs('reservations.reservations')">
+                        {{ __('Reservations') }}
+                    </x-nav-link>
                 </div>
             </div>
 

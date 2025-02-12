@@ -103,4 +103,29 @@ class BoxesController extends Controller
         return redirect()->route('boxes.index');
     }
 
+    public function create()
+    {
+        return view('boxe.create');
+    }
+
+    public function store(Request $request)
+    {
+        $user = auth()->user();
+        $boxe = new Boxes();
+        $boxe->proprietaire_id = $user->id;
+        $boxe->name = $request->name;
+        $boxe->description = $request->description;
+        $boxe->address = $request->address;
+        $boxe->price = $request->price;
+        $boxe->status = 1;
+        $boxe->taille = $request->taille;
+        $boxe->save();
+        session()->flash('success', 'La boîte à bien été ajoutée.');
+        return redirect()->route('boxes.index');
+    }
+
+
+
+
+
 }

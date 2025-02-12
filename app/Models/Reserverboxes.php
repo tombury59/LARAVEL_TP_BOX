@@ -30,4 +30,9 @@ class Reserverboxes extends Model
         return $this->belongsTo(Boxes::class, 'box_id', 'id');
     }
 
+    public function proprietaire()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
+
 }
