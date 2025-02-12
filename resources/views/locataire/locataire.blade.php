@@ -106,6 +106,3 @@
         </div>
     </div>
 </x-app-layout>
-@php
-dd($reservations);
-@endphp

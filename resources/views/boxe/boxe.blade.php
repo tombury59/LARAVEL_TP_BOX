@@ -84,5 +84,46 @@
                 </div>
             </div>
         </div>
+
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mt-5">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                <div class="p-6 bg-white border-b border-gray-200">
+                    <div class="flex justify-between items-start mb-6">
+                        <h1 class="text-3xl font-bold text-gray-800">Historique des réservations</h1>
+                    </div>
+
+                    @if($reservations->isEmpty())
+                        <p class="text-gray-500 text-center">Aucune réservation disponible pour cette boxe.</p>
+                    @else
+                        <div class="grid gap-4 md:grid-cols-2 lg:gap-12 p-6 md:p-5">
+                            @foreach($reservations as $reservation)
+                                <a href="{{ route('boxes.index', $reservation->id) }}"
+                                   class="flex flex-col p-6 space-y-6 transition-all duration-500 bg-white border border-indigo-100 rounded-lg shadow hover:shadow-xl lg:p-8 lg:flex-row lg:space-y-0 lg:space-x-6">
+                                    <div
+                                        class="flex items-center justify-center w-16 h-16 bg-green-100 border border-green-200 rounded-full shadow-inner lg:h-20 lg:w-20">
+                                        <svg class="w-10 h-10 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                             xmlns="http://www.w3.org/2000/svg">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                  d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                                            </path>
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1">
+                                        <h5 class="mb-3 text-xl font-bold lg:text-2xl">{{ $reservation->locataire->nom }}</h5>
+                                        <p class="mb-6 text-lg text-gray-600">Réservé du {{ $reservation->date_fin }} au {{ $reservation->date_debut }}</p>
+                                        <span class="flex items-baseline text-lg font-bold text-indigo-600">
+                                    Voir les détails
+                                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                    </svg>
+                                </span>
+                                    </div>
+                                </a>
+                            @endforeach
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
     </div>
 </x-app-layout>

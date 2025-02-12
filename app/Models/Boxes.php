@@ -33,5 +33,10 @@ class Boxes extends Model
         return $this->belongsTo(User::class, 'proprietaire_id');
     }
 
+    public function reservations()
+    {
+        return $this->hasMany(Reserverboxes::class,'box_id');
+    }
+
 
 }

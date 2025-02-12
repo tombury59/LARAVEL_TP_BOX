@@ -21,6 +21,8 @@ class BoxesController extends Controller
 
         $boxe = $user->boxes()->where('id', $id)->first();
 
+        $reservations = $boxe->reservations()->get();
+
         if (!$boxe) {
             session()->flash('error', "Vous n'avez pas accès à cette boxe");
             return redirect()->route('boxes.index');
@@ -37,8 +39,7 @@ class BoxesController extends Controller
             ->where('id', '>', $boxe->id)
             ->orderBy('id', 'asc')
             ->first();
-
-        return view('boxe.boxe', compact('boxe', 'previousBox', 'nextBox'));
+        return view('boxe.boxe', compact('boxe', 'previousBox', 'nextBox','reservations'));
     }
 
     public function view_edit(Request $request)

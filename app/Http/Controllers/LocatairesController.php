@@ -8,10 +8,15 @@ use Illuminate\Http\Request;
 
 class LocatairesController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $locataires=Locataires::paginate(12);
-        return view('locataire.locataires',compact('locataires'));
+        $search = $request->input('search');
+        $locataires = Locataires::query()
+            ->where('nom', 'LIKE', "%{$search}%")
+            ->orWhere('prenom', 'LIKE', "%{$search}%")
+            ->paginate(10);
+
+        return view('locataire.locataires', compact('locataires', 'search'));
     }
 
     public function create()
