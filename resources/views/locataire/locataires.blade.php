@@ -5,8 +5,15 @@
         </h2>
     </x-slot>
 
+
     <div class="py-6">
+
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            <div class="flex justify-end mb-4">
+                <a href="{{ route('locataires.create') }}" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700 transition-colors duration-300">
+                    Ajouter un Locataire
+                </a>
+            </div>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 @if (session('success'))
                     <div class="p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">

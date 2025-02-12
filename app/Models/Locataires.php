@@ -19,7 +19,8 @@ class Locataires extends Model
         'adresse',
         'ville',
         'code_postal',
-        'pays'
+        'pays',
+        'payement'
     ];
 
     public function boxes()
@@ -30,5 +31,10 @@ class Locataires extends Model
     public function reservation()
     {
         return $this->hasMany(ReserverBoxes::class, 'locataire_id', 'id');
+    }
+
+    public function typePayement()
+    {
+        return $this->belongsTo(TypePayement::class, 'payemement', 'id');
     }
 }

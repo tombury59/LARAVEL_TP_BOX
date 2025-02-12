@@ -10,7 +10,7 @@ class Typepayement extends Model
     use HasFactory;
 
     public $timestamps = false;
-    protected $primaryKey = 'type_payement_id';
+    protected $primaryKey = 'id';
     protected $table = 'type_payement';
     protected $fillable = [
         'type_payement',
