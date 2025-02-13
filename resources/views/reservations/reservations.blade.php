@@ -7,7 +7,11 @@
 
     <div class="bg-gray-100 dark:bg-gray-900 py-6">
         <div class="w-full max-w-7xl mx-auto p-8">
-
+            @if(session('success'))
+                <div class="bg-green-500 text-white p-4 rounded-lg shadow-md mb-4">
+                    {{ session('success') }}
+                </div>
+            @endif
             <!-- Section to create a new reservation -->
             <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md border dark:border-gray-700 mt-2">
                 <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Créer une nouvelle réservation</h1>
@@ -17,7 +21,7 @@
                         <label for="locataire_id" class="block text-gray-700 dark:text-gray-300">Locataire</label>
                         <select required name="locataire_id" id="locataire_id" class="w-full mt-2 p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
                             @foreach($locataires as $locataire)
-                                <option value="{{ $locataire->id }}">{{ $locataire->nom }}</option>
+                                <option value="{{ $locataire->id }}" data-prenom="{{ $locataire->prenom }}" data-nom="{{ $locataire->nom }}">{{ $locataire->nom }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -47,7 +51,11 @@
                     </div>
                     <div class="mb-4">
                         <label for="contract_content" class="block text-gray-700 dark:text-gray-300">Contenu du Contrat</label>
-                        <textarea name="contract_content" id="contract_content" class="w-full mt-2 p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"></textarea>
+                        <textarea name="contract_content" id="contract_content" class="w-full mt-2 p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300" oninput="adjustHeight(this)"></textarea>
+                    </div>
+                    <!-- Section d'erreur pour le message -->
+                    <div id="error-message" class="text-red-600 dark:text-red-400 text-sm mt-2 hidden">
+                        Le contrat n'est pas complet. Veuillez remplir les champs manquants.
                     </div>
                     <div class="flex justify-end">
                         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Créer</button>
@@ -55,6 +63,8 @@
                 </form>
             </div>
 
+
+            <!-- Reservations List Section -->
             <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md border dark:border-gray-700 mt-2">
                 <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">Liste des Réservations actives</h1>
 
@@ -84,7 +94,6 @@
                                         {{ $reservation->boxe->name }}
                                     </a>
                                 </td>
-
                                 <td class="py-3 px-4 border-b dark:border-gray-700">{{ $reservation->date_debut }}</td>
                                 <td class="py-3 px-4 border-b dark:border-gray-700">{{ $reservation->date_fin }}</td>
                                 <td class="py-3 px-4 border-b dark:border-gray-700">
@@ -97,6 +106,7 @@
                                             </svg>
                                         </button>
                                     </form>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
@@ -108,12 +118,69 @@
 
     <script>
         function loadContractContent() {
-            const select = document.getElementById('modele_id');
-            const content = select.options[select.selectedIndex].getAttribute('data-content');
-            document.getElementById('contract_content').value = content;
-            document.getElementById('display_content').innerText = content;
+            try {
+                const selectModele = document.getElementById('modele_id');
+                const textArea = document.getElementById('contract_content');
+                const submitButton = document.querySelector('button[type="submit"]');
+                const errorMessage = document.getElementById('error-message');
+
+                if (!selectModele || !textArea || !submitButton || !errorMessage) return;
+
+                // Récupère le contenu brut du modèle de contrat
+                const content = selectModele.options[selectModele.selectedIndex].getAttribute('data-content');
+
+                // Affiche directement dans le textarea
+                textArea.value = content;
+
+                // Ajuste la hauteur du textarea en fonction du contenu initial
+                adjustHeight(textArea);
+
+                // Vérifie si le contenu contient des crochets []
+                checkForBrackets(content, submitButton, errorMessage);
+            } catch (error) {
+                console.error("Erreur lors du chargement du contenu:", error);
+            }
         }
+
+        // Fonction qui ajuste la hauteur du textarea
+        function adjustHeight(textarea) {
+            textarea.style.height = 'auto'; // Reset the height to auto to shrink if necessary
+            textarea.style.height = (textarea.scrollHeight) + 'px'; // Set the height to match the content's scroll height
+        }
+
+        // Fonction pour vérifier les crochets []
+        function checkForBrackets(content, submitButton, errorMessage) {
+            if (content.includes('[') && content.includes(']')) {
+                // Désactive le bouton, grise et affiche le message d'erreur
+                submitButton.disabled = true;
+                submitButton.classList.add('bg-gray-300', 'cursor-not-allowed');
+                errorMessage.classList.remove('hidden');
+            } else {
+                // Active le bouton et masque le message d'erreur
+                submitButton.disabled = false;
+                submitButton.classList.remove('bg-gray-300', 'cursor-not-allowed');
+                errorMessage.classList.add('hidden');
+            }
+        }
+
+        // Fonction d'écoute du DOM pour ajuster la hauteur du textarea et vérifier les crochets
+        document.addEventListener('DOMContentLoaded', function() {
+            loadContractContent();
+
+            const textArea = document.getElementById('contract_content');
+            const submitButton = document.querySelector('button[type="submit"]');
+            const errorMessage = document.getElementById('error-message');
+
+            // Ajout d'une vérification lors de la saisie dans le textarea
+            textArea.addEventListener('input', function() {
+                checkForBrackets(textArea.value, submitButton, errorMessage);
+            });
+        });
+
     </script>
 
-    <div id="display_content" class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md border dark:border-gray-700 mt-4"></div>
+
+
+
+
 </x-app-layout>

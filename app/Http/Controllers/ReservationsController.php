@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Boxes;
 use App\Models\ContractTemplate;
+use App\Models\Contrat;
 use App\Models\Locataires;
 use App\Models\Reserverboxes;
 use Illuminate\Http\Request;
@@ -51,6 +52,14 @@ class ReservationsController extends Controller
         $updateStatusBoxe = Boxes::findOrFail($request->box_id);
         $updateStatusBoxe->status = 0;
         $updateStatusBoxe->save();
+
+        $lastInsertedId = $reservation->id;
+        $contrat = new Contrat();
+        $contrat->reservation_id = $lastInsertedId;
+        $contrat->modele = $request->modele_id;
+        $contrat->contenu = $request->contract_content;
+        //id qui vien d'être inséré
+        $contrat->save();
 
         session()->flash('success', 'La réservation à bien été ajoutée.');
         return redirect()->route('reservations.reservations');
