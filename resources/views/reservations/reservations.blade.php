@@ -23,7 +23,7 @@
                         </select>
                     </div>
                     <div class="mb-4">
-                        <label for="box_id" class="block text-gray-700 dark:text-gray-300">Boxe</label>
+                        <label for="box_id" class="block text-gray-700 dark:text-gray-300">Boxe(s) disponible(s)</label>
                         <select name="box_id" id="box_id" class="w-full mt-2 p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
                             <!-- Options for boxes -->
                             @foreach($boxes as $box)
