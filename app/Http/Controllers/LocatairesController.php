@@ -14,7 +14,7 @@ class LocatairesController extends Controller
         $locataires = Locataires::query()
             ->where('nom', 'LIKE', "%{$search}%")
             ->orWhere('prenom', 'LIKE', "%{$search}%")
-            ->paginate(10);
+            ->paginate(9);
 
         return view('locataire.locataires', compact('locataires', 'search'));
     }

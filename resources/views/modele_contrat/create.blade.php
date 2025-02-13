@@ -4,7 +4,7 @@
     <div class="container">
         <h1>Créer un Modèle de Contrat</h1>
 
-        <form action="{{ route('modeles_contrats.store') }}" method="POST">
+        <form action="{{ route('modele_contrats.store') }}" method="POST">
             @csrf
             <div class="mb-3">
                 <label for="nom" class="form-label">Nom du modèle :</label>

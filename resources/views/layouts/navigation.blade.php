@@ -24,7 +24,7 @@
                     <x-nav-link :href="route('reservations.reservations')" :active="request()->routeIs('reservations.reservations')">
                         {{ __('Reservations') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('reservations.reservations')" :active="request()->routeIs('reservations.reservations')">
+                    <x-nav-link :href="route('modele_contrat.modeles_contrat')" :active="request()->routeIs('modele_contrat.modeles_contrat')">
                         {{ __('Modèle de contrat') }}
                     </x-nav-link>
                 </div>

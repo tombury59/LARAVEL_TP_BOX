@@ -21,7 +21,7 @@
                             <p class="text-sm">Gérez vos locataires</p>
                         </a>
 {{--                        {{ route('contract-templates.index') }}--}}
-                        <a href="" class="block p-6 bg-yellow-100 rounded-lg hover:bg-yellow-200 transition-colors">
+                        <a href="{{ route('modele_contrat.modeles_contrat') }}" class="block p-6 bg-yellow-100 rounded-lg hover:bg-yellow-200 transition-colors">
                             <h4 class="font-bold">Modèles de contrats</h4>
                             <p class="text-sm">Gérez vos modèles de contrats</p>
                         </a>

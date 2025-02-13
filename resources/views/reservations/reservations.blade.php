@@ -15,8 +15,7 @@
                     @csrf
                     <div class="mb-4">
                         <label for="locataire_id" class="block text-gray-700 dark:text-gray-300">Locataire</label>
-                        <select name="locataire_id" id="locataire_id" class="w-full mt-2 p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
-                            <!-- Options for locataires -->
+                        <select required name="locataire_id" id="locataire_id" class="w-full mt-2 p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
                             @foreach($locataires as $locataire)
                                 <option value="{{ $locataire->id }}">{{ $locataire->nom }}</option>
                             @endforeach
@@ -24,8 +23,7 @@
                     </div>
                     <div class="mb-4">
                         <label for="box_id" class="block text-gray-700 dark:text-gray-300">Boxe(s) disponible(s)</label>
-                        <select name="box_id" id="box_id" class="w-full mt-2 p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
-                            <!-- Options for boxes -->
+                        <select required name="box_id" id="box_id" class="w-full mt-2 p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
                             @foreach($boxes as $box)
                                 <option value="{{ $box->id }}">{{ $box->name }}</option>
                             @endforeach
@@ -33,11 +31,23 @@
                     </div>
                     <div class="mb-4">
                         <label for="date_debut" class="block text-gray-700 dark:text-gray-300">Date de Début</label>
-                        <input type="date" name="date_debut" id="date_debut" class="w-full mt-2 p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+                        <input required type="date" name="date_debut" id="date_debut" class="w-full mt-2 p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
                     </div>
                     <div class="mb-4">
                         <label for="date_fin" class="block text-gray-700 dark:text-gray-300">Date de Fin</label>
-                        <input type="date" name="date_fin" id="date_fin" class="w-full mt-2 p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+                        <input required type="date" name="date_fin" id="date_fin" class="w-full mt-2 p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+                    </div>
+                    <div class="mb-4">
+                        <label for="modele_id" class="block text-gray-700 dark:text-gray-300">Contrat(s) disponible(s)</label>
+                        <select required name="modele_id" id="modele_id" class="w-full mt-2 p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300" onchange="loadContractContent()">
+                            @foreach($modeles as $modele)
+                                <option value="{{ $modele->id }}" data-content="{{ $modele->content }}">{{ $modele->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="mb-4">
+                        <label for="contract_content" class="block text-gray-700 dark:text-gray-300">Contenu du Contrat</label>
+                        <textarea name="contract_content" id="contract_content" class="w-full mt-2 p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"></textarea>
                     </div>
                     <div class="flex justify-end">
                         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Créer</button>
@@ -93,8 +103,17 @@
                     </table>
                 @endif
             </div>
-
-
         </div>
     </div>
+
+    <script>
+        function loadContractContent() {
+            const select = document.getElementById('modele_id');
+            const content = select.options[select.selectedIndex].getAttribute('data-content');
+            document.getElementById('contract_content').value = content;
+            document.getElementById('display_content').innerText = content;
+        }
+    </script>
+
+    <div id="display_content" class="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-md border dark:border-gray-700 mt-4"></div>
 </x-app-layout>

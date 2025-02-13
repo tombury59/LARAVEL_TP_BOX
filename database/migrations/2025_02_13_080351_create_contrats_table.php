@@ -13,19 +13,16 @@ return new class extends Migration
     {
         Schema::create('contrats', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('proprietaire_id'); // Référence au propriétaire
-            $table->unsignedBigInteger('locataire_id'); // Référence au locataire
-            $table->unsignedBigInteger('box_id'); // Référence au box loué
-            $table->string('modele'); // Nom du modèle utilisé
+
+            $table->unsignedBigInteger('reservation_id'); // Référence au locataire
+            $table->unsignedBigInteger('modele');
             $table->text('contenu'); // Contrat généré avec les variables remplies
-            $table->date('date_debut');
-            $table->date('date_fin');
             $table->timestamps();
 
             // Clés étrangères
-            $table->foreign('proprietaire_id')->references('id')->on('users')->onDelete('cascade');
-            $table->foreign('locataire_id')->references('id')->on('locataires')->onDelete('cascade');
-            $table->foreign('box_id')->references('id')->on('boxes')->onDelete('cascade');
+            $table->foreign('modele')->references('id')->on('contract_templates')->onDelete('cascade');
+            $table->foreign('reservation_id')->references('id')->on('reserver_boxes')->onDelete('cascade');
+
         });
     }
 
