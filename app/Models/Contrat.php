@@ -13,6 +13,7 @@ class Contrat extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
+        'prixParMois',
         'reservation_id',
         'modele',
         'contenu'

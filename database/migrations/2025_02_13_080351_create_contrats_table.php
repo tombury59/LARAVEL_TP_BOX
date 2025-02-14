@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('reservation_id'); // Référence au locataire
             $table->unsignedBigInteger('modele');
             $table->text('contenu'); // Contrat généré avec les variables remplies
+            $table->float('prixParMois')->default(0); // Prix total du contrat
             $table->timestamps();
 
             // Clés étrangères
