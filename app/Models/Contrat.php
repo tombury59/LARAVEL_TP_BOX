@@ -13,27 +13,21 @@ class Contrat extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'proprietaire_id',
-        'locataire_id',
-        'box_id',
+        'prixParMois',
+        'reservation_id',
         'modele',
-        'contenu',
-        'date_debut',
-        'date_fin'
+        'contenu'
+
     ];
 
-    public function proprietaire()
+    public function reservation()
     {
-        return $this->belongsTo(User::class, 'proprietaire_id');
+        return $this->belongsTo(Reserverboxes::class, 'reservation_id');
     }
 
-    public function locataire()
+    public function modele()
     {
-        return $this->belongsTo(Locataires::class, 'locataire_id');
+        return $this->belongsTo(ContractTemplate::class, 'modele');
     }
 
-    public function box()
-    {
-        return $this->belongsTo(Boxes::class, 'box_id');
-    }
 }
