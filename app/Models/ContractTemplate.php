@@ -11,10 +11,12 @@ class ContractTemplate extends Model
 
     protected $fillable = ['user_id', 'name', 'content'];
 
-    protected $table = 'contract_templates';
-    protected $primaryKey = 'id';
+    protected $casts = [
+        'content' => 'array',
+    ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 }

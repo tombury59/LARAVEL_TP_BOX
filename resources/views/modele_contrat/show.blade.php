@@ -9,9 +9,22 @@
         <div class="w-full max-w-7xl mx-auto p-8">
             <div class="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md border dark:border-gray-700">
                 <h1 class="text-2xl font-bold text-gray-800 dark:text-white mb-4">{{ $modele->name }}</h1>
-                <p class="text-gray-600 dark:text-gray-400 mb-4">{{ $modele->content }}</p>
+                <div id="editorjs" class="text-gray-600 dark:text-gray-400 mb-4"></div>
                 <a href="{{ route('modele_contrat.modeles_contrat') }}" class="text-blue-600 hover:text-blue-900">Retour à la liste</a>
             </div>
         </div>
     </div>
+
+    <x-editorjs-scripts />
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const editor = new EditorJS({
+                holder: 'editorjs',
+                readOnly: true,
+                data: {!! $modele->content !!},
+                tools: editorTools
+            });
+        });
+    </script>
 </x-app-layout>

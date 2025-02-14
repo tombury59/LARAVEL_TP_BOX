@@ -19,11 +19,6 @@ class ModeleContratController extends Controller
         }
     }
 
-//    public function create()
-//    {
-//        return view('modele_contrat.create');
-//    }
-
     public function show($id)
     {
         try {
@@ -38,19 +33,18 @@ class ModeleContratController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nom' => 'required',
-            'description' => 'required',
+            'name' => 'required|string|max:255',
+            'content' => 'required|json',
         ]);
 
         try {
-
             $contratModele = new ContractTemplate();
             $contratModele->user_id = auth()->id();
-            $contratModele->name = $request->nom;
-            $contratModele->content = $request->description;
+            $contratModele->name = $request->name;
+            $contratModele->content = $request->content;
             $contratModele->save();
 
-            return redirect()->route('modele_contrat.modeles_contrat')->with('success', 'Modèle crée avec succés.');
+            return redirect()->route('modele_contrat.modeles_contrat')->with('success', 'Modèle créé avec succès.');
         } catch (\Exception $e) {
             Log::error('Error creating contract template: ' . $e->getMessage());
             return redirect()->route('modele_contrat.create')->with('error', 'Impossibilité de créer le modèle.');
@@ -71,21 +65,21 @@ class ModeleContratController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'nom' => 'required',
-            'description' => 'required',
+            'name' => 'required|string|max:255',
+            'content' => 'required|json',
         ]);
 
         try {
             $modele = ContractTemplate::findOrFail($id);
             $modele->user_id = auth()->id();
-            $modele->name = $request->nom;
-            $modele->content = $request->description;
-
+            $modele->name = $request->name;
+            $modele->content = $request->content;
             $modele->save();
-            return redirect()->route('modele_contrat.modeles_contrat')->with('success', 'Modèle mis-à-jours avec succés.');
+
+            return redirect()->route('modele_contrat.modeles_contrat')->with('success', 'Modèle mis à jour avec succès.');
         } catch (\Exception $e) {
             Log::error('Error updating contract template: ' . $e->getMessage());
-            return redirect()->route('modele_contrat.edit', $id)->with('error', 'Impossibilité de mettre à jour le modèle');
+            return redirect()->route('modele_contrat.edit', $id)->with('error', 'Impossibilité de mettre à jour le modèle.');
         }
     }
 
@@ -94,7 +88,7 @@ class ModeleContratController extends Controller
         try {
             $modele = ContractTemplate::findOrFail($id);
             $modele->delete();
-            return redirect()->route('modele_contrat.modeles_contrat')->with('success', 'Modèle supprimé avec succés.');
+            return redirect()->route('modele_contrat.modeles_contrat')->with('success', 'Modèle supprimé avec succès.');
         } catch (\Exception $e) {
             Log::error('Error deleting contract template: ' . $e->getMessage());
             return redirect()->route('modele_contrat.modeles_contrat')->with('error', 'Impossibilité de supprimer le modèle.');
