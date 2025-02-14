@@ -14,7 +14,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id'); // Propriétaire du modèle (admin ou propriétaire de box)
             $table->string('name'); // Nom du modèle
-            $table->text('content'); // Contenu du modèle (avec les variables)
+            $table->json('content'); // Contenu du modèle (avec les variables)
             $table->timestamps();
 
             // Clé étrangère pour l'utilisateur qui crée le modèle
