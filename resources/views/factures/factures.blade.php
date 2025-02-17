@@ -8,53 +8,104 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
-                <div class="p-6 bg-white border-b border-gray-200">
+                <div class="p-6 space-y-6">
                     @if(session('success'))
-                        <div class="bg-green-500 text-white p-4 rounded-lg shadow-md mb-4">
-                            @endif
+                        <div class="bg-green-500 text-white p-4 rounded-lg shadow-md mb-4 animate-fade-in-down">
+                            {{ session('success') }}
+                        </div>
+                    @endif
 
-                            <form method="GET" action="{{ route('factures.index') }}">
-                                <label for="user" class="block text-sm font-medium text-gray-700">Sélectionner un utilisateur</label>
-                                <select id="user" name="user" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
+                    <!-- Formulaire de filtrage amélioré -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
+                        <form method="GET" action="{{ route('factures.index') }}" class="space-y-4 md:space-y-0 md:flex md:items-end md:space-x-4">
+                            <div class="flex-grow">
+                                <label for="user" class="block text-sm font-medium text-gray-700 mb-2">
+                                    Sélectionner un utilisateur
+                                </label>
+                                <select id="user" name="user"
+                                        class="w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                                     @foreach($users as $user)
-                                        <option value="{{ $user->id }}" {{ request('user') == $user->id ? 'selected' : '' }}>{{ $user->nom }}</option>
+                                        <option value="{{ $user->id }}" {{ request('user') == $user->id ? 'selected' : '' }}>
+                                            {{ $user->nom }}
+                                        </option>
                                     @endforeach
                                 </select>
-                                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Filtrer</button>
-                            </form>
-                        </div>
+                            </div>
+                            <button type="submit"
+                                    class="w-full md:w-auto px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200">
+                                Filtrer
+                            </button>
+                        </form>
+                    </div>
 
+                    <!-- Section des factures -->
+                    <div class="mt-8">
                         @if($factures->isEmpty())
-                            <p class="text-gray-600">Aucune facture trouvée.</p>
+                            <div class="text-center py-12">
+                                <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                                </svg>
+                                <h3 class="mt-2 text-sm font-medium text-gray-900">Aucune facture</h3>
+                                <p class="mt-1 text-sm text-gray-500">Aucune facture n'a été trouvée pour cet utilisateur.</p>
+                            </div>
                         @else
-                            <table class="min-w-full bg-white">
-                                <thead>
-                                <tr class="w-full bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                                    <th class="py-3 px-6 text-left">Numéro de Facture</th>
-                                    <th class="py-3 px-6 text-left">Date de Paiement</th>
-                                    <th class="py-3 px-6 text-left">Montant</th>
-                                    <th class="py-3 px-6 text-left">Période</th>
-                                    <th class="py-3 px-6 text-left">Contrat ID</th>
-                                    <th class="py-3 px-6 text-left">Actions</th>
-                                </tr>
-                                </thead>
-                                <tbody class="text-gray-600 text-sm font-light">
-                                @foreach($factures as $facture)
-                                    <tr class="border-b border-gray-200 hover:bg-gray-100">
-                                        <td class="py-3 px-6 text-left">{{ $facture->numero_facture }}</td>
-                                        <td class="py-3 px-6 text-left">{{ $facture->payement_date }}</td>
-                                        <td class="py-3 px-6 text-left">{{ $facture->montant_facture }}</td>
-                                        <td class="py-3 px-6 text-left">{{ $facture->period }}</td>
-                                        <td class="py-3 px-6 text-left">{{ $facture->contrat_id }}</td>
-                                        <td class="py-3 px-6 text-left">
-                                            <a href="{{ route('factures.show', $facture->id) }}" class="text-blue-600 hover:text-blue-900">Voir</a>
-                                        </td>
+                            <div class="overflow-x-auto rounded-lg shadow">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Numéro de Facture
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Date de Paiement
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Montant
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Période
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Contrat ID
+                                        </th>
+                                        <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                            Actions
+                                        </th>
                                     </tr>
-                                @endforeach
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                    @foreach($factures as $facture)
+                                        <tr class="hover:bg-gray-50 transition-colors duration-150">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                                {{ $facture->numero_facture }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                {{ $facture->payement_date }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                                <span class="font-medium">{{ $facture->montant_facture }} €</span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                {{ $facture->period }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                {{ $facture->contrat_id }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm">
+                                                <a href="{{ route('factures.show', $facture->id) }}"
+                                                   class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                                    Voir
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
                         @endif
+                    </div>
                 </div>
             </div>
         </div>
+    </div>
 </x-app-layout>
