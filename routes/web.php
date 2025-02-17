@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BoxesController;
 use App\Http\Controllers\FacturesController;
+use App\Http\Controllers\ImpotsController;
 use App\Http\Controllers\LocatairesController;
 use App\Http\Controllers\ModeleContratController;
 use App\Http\Controllers\ProfileController;
@@ -61,7 +62,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/factures/create/{reservation}', [FacturesController::class, 'show_create_factures_monthly'])->name('factures.show_create_factures_monthly');
     Route::post('/factures/create/{reservation}', [FacturesController::class, 'create_factures_monthly'])->name('factures.create_factures_monthly');
 
-
+    Route::get('/impots', [ImpotsController::class, 'showCalculations'])->name('impots.calculations');
 
 });
 

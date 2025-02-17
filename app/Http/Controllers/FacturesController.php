@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\DateHelper;
 use App\Models\Contrat;
 use App\Models\Factures;
 use App\Models\Locataires;
 use App\Models\Reserverboxes;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class FacturesController extends Controller
@@ -22,7 +24,11 @@ class FacturesController extends Controller
             });
         }
 
-        $factures = $factures->get();
+        $factures = $factures->get()->map(function ($facture) {
+//            dd($facture->contrat->reservation->date_debut);
+            $facture->period = DateHelper::getPeriod($facture->contrat->reservation->date_debut, $facture->periode_facture);
+            return $facture;
+        });
 
         return view('factures.factures', compact('factures', 'users'));
     }
@@ -54,6 +60,13 @@ class FacturesController extends Controller
         $facture->save();
 
         return redirect()->route('factures.index')->with('success', 'Facture créée avec succès.');
+    }
+
+    function getPeriod($date_debut, $period)
+    {
+        $date = Carbon::createFromFormat('d/m/Y', $date_debut);
+        $date->addMonths($period - 1);
+        return $date->format('F Y');
     }
 
 }
