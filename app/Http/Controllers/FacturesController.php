@@ -36,15 +36,18 @@ class FacturesController extends Controller
     public function show($id)
     {
         $facture = Factures::findOrFail($id);
-        return view('factures.show',compact('facture'));
+        $facture->period = DateHelper::getPeriod($facture->contrat->reservation->date_debut, $facture->periode_facture);
+        return view('factures.show', compact('facture'));
     }
 
     public function show_create_factures_monthly($reservationId)
     {
-        $reservation = Reserverboxes::findOrFail($reservationId);
-        return view('factures.show_create_factures_monthly', compact('reservation'));
-    }
+        $reservation = Reserverboxes::with('contrat.factures')->findOrFail($reservationId);
+        $lastFacture = $reservation->contrat->factures->last();
+        $nextPeriod = $lastFacture ? $lastFacture->periode_facture + 1 : 1;
 
+        return view('factures.show_create_factures_monthly', compact('reservation', 'nextPeriod'));
+    }
     public function create_factures_monthly(Request $request,$reservationId)
     {
         $reservation = Reserverboxes::findOrFail($reservationId);
@@ -54,7 +57,7 @@ class FacturesController extends Controller
         $facture->numero_facture = now()->format('Ymd') . "_".$contrat."_". str_pad(Factures::count() + 1, 4, '0', STR_PAD_LEFT);
         $facture->payement_date = $request->payement_date;
         $facture->montant_facture = $request->montant_facture;
-        $facture->periode_facture = $request->periode_facture;
+        $facture->periode_facture = $request->period;
 //        $facture->contrat_id = $contrat->id;
         $facture->contrat_id =$contrat;
         $facture->save();

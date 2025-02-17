@@ -41,5 +41,11 @@ class Reserverboxes extends Model
     }
 
 
+    public function factures()
+    {
+        return $this->contrat->factures;
+    }
+
+
 
 }

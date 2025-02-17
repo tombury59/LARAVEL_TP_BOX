@@ -30,4 +30,8 @@ class Contrat extends Model
         return $this->belongsTo(ContractTemplate::class, 'modele');
     }
 
+    public function factures()
+    {
+        return $this->hasMany(Factures::class, 'contrat_id');
+    }
 }

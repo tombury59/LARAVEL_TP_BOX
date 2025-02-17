@@ -11,7 +11,8 @@ class ModeleContratController extends Controller
     public function index()
     {
         try {
-            $modeles = ContractTemplate::all();
+            $userId = auth()->id();
+            $modeles = ContractTemplate::where('user_id', $userId)->get();
             return view('modele_contrat.modeles_contrat', compact('modeles'));
         } catch (\Exception $e) {
             Log::error('Error fetching contract templates: ' . $e->getMessage());
@@ -22,7 +23,8 @@ class ModeleContratController extends Controller
     public function show($id)
     {
         try {
-            $modele = ContractTemplate::findOrFail($id);
+            $userId = auth()->id();
+            $modele = ContractTemplate::where('id', $id)->where('user_id', $userId)->firstOrFail();
             return view('modele_contrat.show', compact('modele'));
         } catch (\Exception $e) {
             Log::error('Error fetching contract template: ' . $e->getMessage());
