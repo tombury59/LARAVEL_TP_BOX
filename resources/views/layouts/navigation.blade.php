@@ -15,17 +15,20 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Tableau de bord') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('locataires.index')" :active="request()->routeIs('locataires.index')">
+                        {{ __('Locataires') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('boxes.index')" :active="request()->routeIs('boxes.index')">
                         {{ __('Boxes') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('locataires.index')" :active="request()->routeIs('locataires.index')">
-                        {{ __('Locataires') }}
+                    <x-nav-link :href="route('modele_contrat.modeles_contrat')" :active="request()->routeIs('modele_contrat.modeles_contrat')">
+                        {{ __('Modèle de contrat') }}
                     </x-nav-link>
                     <x-nav-link :href="route('reservations.reservations')" :active="request()->routeIs('reservations.reservations')">
                         {{ __('Reservations') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('modele_contrat.modeles_contrat')" :active="request()->routeIs('modele_contrat.modeles_contrat')">
-                        {{ __('Modèle de contrat') }}
+                    <x-nav-link :href="route('factures.index')" :active="request()->routeIs('factures.index')">
+                        {{ __('Factures') }}
                     </x-nav-link>
                 </div>
             </div>

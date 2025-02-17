@@ -28,7 +28,7 @@ class Locataires extends Model
         return $this->belongsToMany(Boxes::class, 'reserver_boxes', 'id', 'box_id')->withPivot('date_debut', 'date_fin');
     }
 
-    public function reservation()
+    public function reservations()
     {
         return $this->hasMany(ReserverBoxes::class, 'locataire_id', 'id');
     }

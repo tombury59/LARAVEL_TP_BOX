@@ -35,4 +35,11 @@ class Reserverboxes extends Model
         return $this->belongsTo(User::class, 'id');
     }
 
+    public function contrat()
+    {
+        return $this->hasOne(Contrat::class, 'reservation_id', 'id');
+    }
+
+
+
 }

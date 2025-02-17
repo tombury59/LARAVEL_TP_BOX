@@ -6,7 +6,9 @@ use App\Models\Boxes;
 use App\Models\ContractTemplate;
 use App\Models\Contrat;
 use App\Models\Locataires;
+use App\Models\Factures;
 use App\Models\Reserverboxes;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ReservationsController extends Controller
@@ -64,6 +66,19 @@ class ReservationsController extends Controller
         $contrat->contenu = $request->contract_content; // Ensure this is not null
         $contrat->prixParMois = $request->price;
         $contrat->save();
+
+        $dateDebut = Carbon::parse($request->date_debut);
+        $dateFin = Carbon::parse($request->date_fin);
+        $nbMois = $dateDebut->diffInMonths($dateFin);
+
+//        $facture = new Factures();
+//        $facture->numero_facture = 'F'.str_pad(Factures::count() + 1, 4, '0', STR_PAD_LEFT);
+//        $facture->payement_date = $request->date_debut;
+//        $facture->montant_facture = round($request->price*$nbMois,2);
+//        $facture->periode_facture = $nbMois;
+//        $facture->contrat_id = $contrat->id;
+//        $facture->save();
+
 
         session()->flash('success', 'La réservation bien été ajoutée.');
         return redirect()->route('reservations.reservations');
