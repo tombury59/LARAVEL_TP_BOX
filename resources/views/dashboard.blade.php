@@ -29,12 +29,12 @@
                             <p class="text-sm">Gérez vos réservations</p>
                         </a>
 {{--                        {{ route('tax-calculator') }}--}}
-                        <a href="" class="block p-6 bg-red-100 rounded-lg hover:bg-red-200 transition-colors">
+                        <a href="{{ route('impots.calculations') }}" class="block p-6 bg-red-100 rounded-lg hover:bg-red-200 transition-colors">
                             <h4 class="font-bold">Calcul des impôts</h4>
                             <p class="text-sm">Calculez vos impôts</p>
                         </a>
 {{--                        {{ route('invoices.index') }}--}}
-                        <a href="" class="block p-6 bg-indigo-100 rounded-lg hover:bg-indigo-200 transition-colors">
+                        <a href="{{ route('factures.index') }}" class="block p-6 bg-indigo-100 rounded-lg hover:bg-indigo-200 transition-colors">
                             <h4 class="font-bold">Gestion des factures</h4>
                             <p class="text-sm">Gérez vos factures</p>
                         </a>

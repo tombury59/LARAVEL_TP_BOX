@@ -30,6 +30,9 @@
                     <x-nav-link :href="route('factures.index')" :active="request()->routeIs('factures.index')">
                         {{ __('Factures') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('impots.calculations')" :active="request()->routeIs('impots.calculations')">
+                        {{ __("Calcul d'impot") }}
+                    </x-nav-link>
                 </div>
             </div>
 
