@@ -196,8 +196,6 @@
                     const priceInput = document.getElementById('price');
                     const price = priceInput.value;
 
-
-
                     fillContractFields({
                         '##NOM##': locataireNom,
                         '##PRENOM##': locatairePrenom,
