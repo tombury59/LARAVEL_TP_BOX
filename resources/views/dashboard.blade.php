@@ -15,20 +15,18 @@
                             <h4 class="font-bold">Gestion des box</h4>
                             <p class="text-sm">Gérez vos box de stockage</p>
                         </a>
-{{--                        {{ route('tenants.index') }}--}}
                         <a href="{{route('locataires.index')}}" class="block p-6 bg-green-100 rounded-lg hover:bg-green-200 transition-colors">
                             <h4 class="font-bold">Gestion des locataires</h4>
                             <p class="text-sm">Gérez vos locataires</p>
                         </a>
-{{--                        {{ route('contract-templates.index') }}--}}
                         <a href="{{ route('modele_contrat.modeles_contrat') }}" class="block p-6 bg-yellow-100 rounded-lg hover:bg-yellow-200 transition-colors">
                             <h4 class="font-bold">Modèles de contrats</h4>
                             <p class="text-sm">Gérez vos modèles de contrats</p>
                         </a>
-{{--                        {{ route('contracts.index') }}--}}
-                        <a href="" class="block p-6 bg-purple-100 rounded-lg hover:bg-purple-200 transition-colors">
-                            <h4 class="font-bold">Gestion des contrats</h4>
-                            <p class="text-sm">Gérez vos contrats actifs</p>
+
+                        <a href="{{ route('reservations.reservations') }}" class="block p-6 bg-purple-100 rounded-lg hover:bg-purple-200 transition-colors">
+                            <h4 class="font-bold">Gestion de vos réservations</h4>
+                            <p class="text-sm">Gérez vos réservations</p>
                         </a>
 {{--                        {{ route('tax-calculator') }}--}}
                         <a href="" class="block p-6 bg-red-100 rounded-lg hover:bg-red-200 transition-colors">

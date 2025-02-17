@@ -22,16 +22,20 @@
                     <table class="min-w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
                         <thead>
                         <tr class="bg-gray-200 dark:bg-gray-700">
+                            <th class="py-3 px-4 border-b dark:border-gray-700 text-left text-gray-600 dark:text-gray-300">Numéro contrat</th>
                             <th class="py-3 px-4 border-b dark:border-gray-700 text-left text-gray-600 dark:text-gray-300">Nom du Locataire</th>
                             <th class="py-3 px-4 border-b dark:border-gray-700 text-left text-gray-600 dark:text-gray-300">Nom du Boxe</th>
                             <th class="py-3 px-4 border-b dark:border-gray-700 text-left text-gray-600 dark:text-gray-300">Date de Début</th>
                             <th class="py-3 px-4 border-b dark:border-gray-700 text-left text-gray-600 dark:text-gray-300">Date de Fin</th>
+                            <th class="py-3 px-4 border-b dark:border-gray-700 text-left text-gray-600 dark:text-gray-300">Générer facture mensuel</th>
                             <th class="py-3 px-4 border-b dark:border-gray-700 text-left text-gray-600 dark:text-gray-300">Supprimer</th>
+
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($reservations as $reservation)
                             <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                <td class="py-3 px-4 border-b dark:border-gray-700">{{ $reservation->id }}</td>
                                 <td class="py-3 px-4 border-b dark:border-gray-700">
                                     {{ $reservation->locataire->nom }}
                                 </td>
@@ -41,12 +45,23 @@
                                 <td class="py-3 px-4 border-b dark:border-gray-700">{{ $reservation->date_debut }}</td>
                                 <td class="py-3 px-4 border-b dark:border-gray-700">{{ $reservation->date_fin }}</td>
                                 <td class="py-3 px-4 border-b dark:border-gray-700">
+                                        <a href="{{route('factures.show_create_factures_monthly',$reservation->id)}}">Générer</a>
+                                </td>
+                                <td class="py-3 px-4 border-b dark:border-gray-700">
                                     <form action="{{ route('reservations.destroy', $reservation->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-900">Supprimer</button>
+                                        <button type="submit" class="text-red-600 hover:text-red-900">
+                                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M3 6h18M8 6V4a2 2 0 012-2h4a2 2 0 012 2v2m3 0v14a2 2 0 01-2 2H6a2 2 0 01-2-2V6h14z"
+                                                      stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <line x1="10" y1="10" x2="10" y2="16" stroke="black" stroke-width="2" stroke-linecap="round"/>
+                                                <line x1="14" y1="10" x2="14" y2="16" stroke="black" stroke-width="2" stroke-linecap="round"/>
+                                            </svg>
+                                        </button>
                                     </form>
                                 </td>
+
                             </tr>
                         @endforeach
                         </tbody>
@@ -195,8 +210,6 @@
 
                     const priceInput = document.getElementById('price');
                     const price = priceInput.value;
-
-
 
                     fillContractFields({
                         '##NOM##': locataireNom,
