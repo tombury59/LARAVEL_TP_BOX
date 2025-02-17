@@ -29,7 +29,9 @@ class ReservationsController extends Controller
         $boxes = Boxes::where('status', 1)
             ->where('proprietaire_id', auth()->id())
             ->get();
-        $modeles=ContractTemplate::all();
+
+        $userId = auth()->id();
+        $modeles = ContractTemplate::where('user_id', $userId)->get();
 
         return view('reservations.reservations', compact('reservations','locataires','boxes','modeles'));
     }

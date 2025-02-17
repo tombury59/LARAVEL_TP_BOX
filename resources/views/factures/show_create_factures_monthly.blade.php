@@ -24,7 +24,8 @@
                         </div>
                         <div class="mb-4">
                             <label for="periode_facture" class="block text-sm font-medium text-gray-700">Période</label>
-                            <input type="text" id="periode_facture" name="periode_facture" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" required>
+                            <input disabled type="text" id="periode_facture" value="{{$nextPeriod}}" name="periode_facture" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" required>
+                            <input type="hidden" id="period" value="{{$nextPeriod}}" name="period">
                         </div>
                         <input type="hidden" name="contrat_id" value="{{ $reservation->contrat->id }}">
                         <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">Créer Facture</button>
