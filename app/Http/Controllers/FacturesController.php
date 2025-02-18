@@ -85,4 +85,33 @@ class FacturesController extends Controller
         return $date->format('F Y');
     }
 
+    public function generateAllInvoices()
+    {
+        $reservations = Reserverboxes::with('contrat')->get();
+        $currentMonth = now()->month;
+        $currentYear = now()->year;
+
+        foreach ($reservations as $reservation) {
+            $contrat = $reservation->contrat->id;
+
+            // Check if an invoice already exists for the current month and year
+            $existingInvoice = Factures::where('contrat_id', $contrat)
+                ->whereMonth('created_at', $currentMonth)
+                ->whereYear('created_at', $currentYear)
+                ->first();
+
+            if (!$existingInvoice) {
+                $facture = new Factures();
+                $facture->numero_facture = now()->format('Ymd') . "_".$contrat."_". str_pad(Factures::count() + 1, 4, '0', STR_PAD_LEFT);
+                $facture->payement_date = now();
+                $facture->montant_facture = $reservation->boxe->price; // Set the appropriate amount
+                $facture->periode_facture = $currentMonth;
+                $facture->contrat_id = $contrat;
+                $facture->save();
+            }
+        }
+
+        return redirect()->route('factures.index')->with('success', 'Toutes les factures du mois ont été générées avec succès.');
+    }
+
 }

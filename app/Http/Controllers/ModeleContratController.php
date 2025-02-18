@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\ContractTemplate;
+use App\Models\Contrat;
+use App\Models\Reserverboxes;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -94,6 +96,18 @@ class ModeleContratController extends Controller
         } catch (\Exception $e) {
             Log::error('Error deleting contract template: ' . $e->getMessage());
             return redirect()->route('modele_contrat.modeles_contrat')->with('error', 'Impossibilité de supprimer le modèle.');
+        }
+    }
+
+    public function showContrat($id)
+    {
+        try {
+            $reservation = Reserverboxes::findOrFail($id);
+            $modele = $reservation->contrat;
+            return view('contrat.show_contrat', compact('modele'));
+        } catch (\Exception $e) {
+            Log::error('Error fetching contract : ' . $e->getMessage());
+            return redirect()->route('reservations.reservations')->with('error', 'Contrat non-trouvé.');
         }
     }
 }

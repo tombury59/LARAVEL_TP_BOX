@@ -4,12 +4,13 @@ namespace Database\Seeders;
 
 use App\Models\Boxes;
 use App\Models\ContractTemplate;
+use App\Models\Contrat;
 use App\Models\Locataires;
 use App\Models\Reserverboxes;
 use App\Models\Typepayement;
 use App\Models\User;
 use Illuminate\Database\Seeder;
-
+use Faker\Factory as Faker;
 class DatabaseSeeder extends Seeder
 {
     public function run(): void
@@ -28,11 +29,12 @@ class DatabaseSeeder extends Seeder
         Typepayement::factory(5)->create();
 
         User::factory(10)->create()->each(function ($user) {
-            Boxes::factory(1)->create(['proprietaire_id' => $user->id]);
+            Boxes::factory(1)->create(['proprietaire_id' => random_int(1, 2)]);
         });
 
         Locataires::factory(20)->create();
-        Reserverboxes::factory(10)->create();
+//        Reserverboxes::factory(10)->create();
+
 
         Boxes::factory()->create([
             'proprietaire_id' => 1,
@@ -53,6 +55,21 @@ class DatabaseSeeder extends Seeder
             'status' => 1,
             'taille' => 100
         ]);
+
+        $reserverboxes = Reserverboxes::factory(5)->create();
+
+        // Create 5 ContractTemplate instances
+        $contractTemplates = ContractTemplate::factory(5)->create();
+
+        // Create 5 Contrat instances and associate each with a Reserverbox and a ContractTemplate
+        $reserverboxes->each(function ($reserverbox) use ($contractTemplates) {
+            Contrat::factory()->create([
+                'reservation_id' => $reserverbox->id,
+                'modele' => $contractTemplates->random()->id, // Use a valid foreign key value
+                'contenu' => json_encode(['blocks' => []]),
+                'prixParMois' => 100,
+            ]);
+        });
 
     }
 }

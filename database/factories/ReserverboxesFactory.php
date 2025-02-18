@@ -19,8 +19,8 @@ class ReserverboxesFactory extends Factory
         return [
             'locataire_id' => $this->faker->numberBetween(1, 10),
             'box_id' => $this->faker->numberBetween(1, 10),
-            'date_debut' => $this->faker->date(),
-            'date_fin' => $this->faker->date(),
+            'date_debut' => $this->faker->dateTimeBetween('-2 months', 'now')->format('Y-m-d'),
+            'date_fin' => $this->faker->dateTimeBetween('now', '+5 months')->format('Y-m-d'),
         ];
     }
 }

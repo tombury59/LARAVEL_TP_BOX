@@ -14,7 +14,12 @@
                             {{ session('success') }}
                         </div>
                     @endif
-
+                        <form action="{{ route('factures.generateAll') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-lg transition duration-300 ease-in-out transform hover:scale-105">
+                                Générer tous les factures
+                            </button>
+                        </form>
                     <!-- Formulaire de filtrage amélioré -->
                     <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
                         <form method="GET" action="{{ route('factures.index') }}" class="space-y-4 md:space-y-0 md:flex md:items-end md:space-x-4">

@@ -12,6 +12,9 @@ class Contrat extends Model
     protected $table = 'contrats';
     protected $primaryKey = 'id';
 
+    protected $casts = [
+        'contenu' => 'array',
+    ];
     protected $fillable = [
         'prixParMois',
         'reservation_id',

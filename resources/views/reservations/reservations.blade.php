@@ -22,7 +22,7 @@
                     <table class="min-w-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden">
                         <thead>
                         <tr class="bg-gray-200 dark:bg-gray-700">
-                            <th class="py-3 px-4 border-b dark:border-gray-700 text-left text-gray-600 dark:text-gray-300">Numéro contrat</th>
+                            <th class="py-3 px-4 border-b dark:border-gray-700 text-left text-gray-600 dark:text-gray-300">Contrat</th>
                             <th class="py-3 px-4 border-b dark:border-gray-700 text-left text-gray-600 dark:text-gray-300">Nom du Locataire</th>
                             <th class="py-3 px-4 border-b dark:border-gray-700 text-left text-gray-600 dark:text-gray-300">Nom du Boxe</th>
                             <th class="py-3 px-4 border-b dark:border-gray-700 text-left text-gray-600 dark:text-gray-300">Date de Début</th>
@@ -35,7 +35,13 @@
                         <tbody>
                         @foreach($reservations as $reservation)
                             <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-                                <td class="py-3 px-4 border-b dark:border-gray-700">{{ $reservation->id }}</td>
+                                <td class="py-3 px-4 border-b dark:border-gray-700">
+                                    <a href="{{ route('contrat.show', $reservation->id) }}">
+                                        <button class="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                            Voir le contrat
+                                        </button>
+                                    </a>
+                                </td>
                                 <td class="py-3 px-4 border-b dark:border-gray-700">
                                     {{ $reservation->locataire->nom }}
                                 </td>
@@ -88,13 +94,13 @@
                         <label for="box_id" class="block text-gray-700 dark:text-gray-300">Boxe(s) disponible(s)</label>
                         <select required name="box_id" id="box_id" class="w-full mt-2 p-2 border rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300" onchange="updateBoxPrice()">
                             @foreach($boxes as $box)
-                                <option value="{{ $box->id }}" data-price="{{ $box->price }}">{{ $box->name }}</option>
-                                <input type="hidden" name="proprioNom" id="proprioNom" value="{{ $box->proprietaire->name }}">
-                                <input type="hidden" name="proprioEmail" id="proprioEmail" value="{{ $box->proprietaire->email }}">
-                                <input type="hidden" name="boxName" id="boxName" value="{{ $box->name }}">
-                                <input type="hidden" name="boxTaille" id="boxTaille" value="{{ $box->taille }}">
+                                <option value="{{ $box->id }}" data-price="{{ $box->price }}" data-proprio-nom="{{ $box->proprietaire->name }}" data-proprio-email="{{ $box->proprietaire->email }}" data-box-name="{{ $box->name }}" data-box-taille="{{ $box->taille }}">{{ $box->name }}</option>
                             @endforeach
                         </select>
+                        <input type="hidden" name="proprioNom" id="proprioNom">
+                        <input type="hidden" name="proprioEmail" id="proprioEmail">
+                        <input type="hidden" name="boxName" id="boxName">
+                        <input type="hidden" name="boxTaille" id="boxTaille">
                     </div>
                     <div class="mb-4">
                         <label for="date_debut" class="block text-gray-700 dark:text-gray-300">Date de Début</label>
@@ -137,27 +143,31 @@
     <x-editorjs-scripts />
 
     <script>
+        // Configuration de l'éditeur EditorJS
         let editor;
 
+        // Fonction pour mettre à jour le prix et les informations de la boxe
         function updateBoxPrice() {
             const boxSelect = document.getElementById('box_id');
             const priceInput = document.getElementById('price');
+            const proprioNomInput = document.getElementById('proprioNom');
+            const proprioEmailInput = document.getElementById('proprioEmail');
+            const boxNameInput = document.getElementById('boxName');
+            const boxTailleInput = document.getElementById('boxTaille');
 
-            if (!boxSelect || !priceInput) return;
+            if (!boxSelect) return;
 
             const selectedOption = boxSelect.options[boxSelect.selectedIndex];
-            const price = selectedOption.getAttribute('data-price');
 
-            priceInput.value = price;
+            // Mise à jour du prix et des champs cachés
+            if (priceInput) priceInput.value = selectedOption.getAttribute('data-price');
+            if (proprioNomInput) proprioNomInput.value = selectedOption.getAttribute('data-proprio-nom');
+            if (proprioEmailInput) proprioEmailInput.value = selectedOption.getAttribute('data-proprio-email');
+            if (boxNameInput) boxNameInput.value = selectedOption.getAttribute('data-box-name');
+            if (boxTailleInput) boxTailleInput.value = selectedOption.getAttribute('data-box-taille');
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            updateBoxPrice(); // Set initial price when the page loads
-
-            const boxSelect = document.getElementById('box_id');
-            boxSelect.addEventListener('change', updateBoxPrice); // Update price when a new box is selected
-        });
-
+        // Fonction pour charger le contenu du contrat
         function loadContractContent() {
             const selectModele = document.getElementById('modele_id');
             const createButton = document.getElementById('create-button');
@@ -173,9 +183,11 @@
                     blocks: []
                 };
             }
+
             if (editor) {
                 editor.destroy();
             }
+
             editor = new EditorJS({
                 holder: 'editorjs',
                 data: content,
@@ -196,40 +208,8 @@
                 tools: editorTools
             });
         }
-        document.addEventListener('DOMContentLoaded', function() {
-            loadContractContent();
-        });
 
-        document.addEventListener('DOMContentLoaded', function() {
-            const fillButton = document.getElementById('fill-button');
-            if (fillButton) {
-
-                fillButton.addEventListener('click', function() {
-                    const locataireSelect = document.getElementById('locataire_id');
-                    const selectedLocataire = locataireSelect.options[locataireSelect.selectedIndex];
-                    const locataireNom = selectedLocataire.text;
-                    const locatairePrenom = selectedLocataire.getAttribute('data-prenom');
-
-                    const priceInput = document.getElementById('price');
-                    const price = priceInput.value;
-
-                    fillContractFields({
-                        '##NOM##': locataireNom,
-                        '##PRENOM##': locatairePrenom,
-                        '##PRICE##': price,
-                        '##DATE_DEBUT##': document.getElementById('date_debut').value,
-                        '##DATE_FIN##': document.getElementById('date_fin').value,
-                        '##PROPRIO_NOM##': document.getElementById('proprioNom').value,
-                        '##PROPRIO_EMAIL##': document.getElementById('proprioEmail').value,
-                        '##BOX_NAME##': document.getElementById('boxName').value,
-                        '##BOX_TAILLE##': document.getElementById('boxTaille').value
-                    });
-                });
-            } else {
-                console.error('Fill button not found in the current page.');
-            }
-        });
-
+        // Fonction pour remplir les champs du contrat
         function fillContractFields(replacements) {
             editor.save().then((outputData) => {
                 const blocks = outputData.blocks;
@@ -238,26 +218,20 @@
                     if (block && block.data) {
                         if (block.data.text) {
                             let text = block.data.text;
-
-                            // Remplacer uniquement les champs spécifiques
                             Object.entries(replacements).forEach(([key, value]) => {
                                 const regex = new RegExp(key, 'g');
                                 text = text.replace(regex, value || '');
                             });
-
                             block.data.text = text;
                         }
 
                         if (block.data.items && Array.isArray(block.data.items)) {
                             block.data.items = block.data.items.map(item => {
                                 let text = item;
-
-                                // Remplacer uniquement les champs spécifiques
                                 Object.entries(replacements).forEach(([key, value]) => {
                                     const regex = new RegExp(key, 'g');
                                     text = text.replace(regex, value || '');
                                 });
-
                                 return text;
                             });
                         }
@@ -279,5 +253,43 @@
                 console.error('Erreur lors de la mise à jour du contrat:', error);
             });
         }
+
+        // Event Listeners au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialisation du prix et des données de la boxe
+            updateBoxPrice();
+            const boxSelect = document.getElementById('box_id');
+            boxSelect.addEventListener('change', updateBoxPrice);
+
+            // Initialisation de l'éditeur de contrat
+            loadContractContent();
+
+            // Configuration du bouton de remplissage
+            const fillButton = document.getElementById('fill-button');
+            if (fillButton) {
+                fillButton.addEventListener('click', function() {
+                    const locataireSelect = document.getElementById('locataire_id');
+                    const selectedLocataire = locataireSelect.options[locataireSelect.selectedIndex];
+                    const locataireNom = selectedLocataire.text;
+                    const locatairePrenom = selectedLocataire.getAttribute('data-prenom');
+                    const priceInput = document.getElementById('price');
+                    const price = priceInput.value;
+
+                    fillContractFields({
+                        '##NOM##': locataireNom,
+                        '##PRENOM##': locatairePrenom,
+                        '##PRICE##': price,
+                        '##DATE_DEBUT##': document.getElementById('date_debut').value,
+                        '##DATE_FIN##': document.getElementById('date_fin').value,
+                        '##PROPRIO_NOM##': document.getElementById('proprioNom').value,
+                        '##PROPRIO_EMAIL##': document.getElementById('proprioEmail').value,
+                        '##BOX_NAME##': document.getElementById('boxName').value,
+                        '##BOX_TAILLE##': document.getElementById('boxTaille').value
+                    });
+                });
+            } else {
+                console.error('Fill button not found in the current page.');
+            }
+        });
     </script>
 </x-app-layout>

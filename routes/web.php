@@ -55,9 +55,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/modele-contrat/edit/{id}', [ModeleContratController::class, 'edit'])->name('modele_contrat.edit');
     Route::delete('/modele-contrat/{id}', [ModeleContratController::class, 'destroy'])->name('modele_contrat.destroy');
 
+    Route::get('/contrat/{id}', [ModeleContratController::class, 'showContrat'])->name('contrat.show');
 
     Route::get('/factures',[FacturesController::class, 'index'])->name('factures.index');
     Route::get('/facture/{id}', [FacturesController::class, 'show'])->name('factures.show');
+
+    Route::post('/factures/generate-all', [FacturesController::class, 'generateAllInvoices'])->name('factures.generateAll');
 
     Route::get('/factures/create/{reservation}', [FacturesController::class, 'show_create_factures_monthly'])->name('factures.show_create_factures_monthly');
     Route::post('/factures/create/{reservation}', [FacturesController::class, 'create_factures_monthly'])->name('factures.create_factures_monthly');

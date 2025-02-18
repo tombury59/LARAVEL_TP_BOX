@@ -10,7 +10,7 @@ class BoxesFactory extends Factory
     public function definition(): array
     {
         return [
-            'proprietaire_id' => User::factory(),
+            'proprietaire_id' => $this->faker->numberBetween(1, 2),
             'name' => $this->faker->name,
             'description' => $this->faker->sentence,
             'address' => $this->faker->address,
