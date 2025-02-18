@@ -18,6 +18,11 @@ class DatabaseSeeder extends Seeder
             'email' => 'tombury59@hotmail.com',
             'password' => bcrypt('password'),
         ]);
+        User::factory()->create([
+            'name' => 'Test',
+            'email' => 'test@test.test',
+            'password' => bcrypt('password'),
+        ]);
 
         Typepayement::factory(5)->create();
 

@@ -48,18 +48,31 @@ class FacturesController extends Controller
 
         return view('factures.show_create_factures_monthly', compact('reservation', 'nextPeriod'));
     }
-    public function create_factures_monthly(Request $request,$reservationId)
+    public function create_factures_monthly(Request $request, $reservationId)
     {
         $reservation = Reserverboxes::findOrFail($reservationId);
         $contrat = $reservation->contrat->id;
+
+        // Get the current month and year
+        $currentMonth = now()->month;
+        $currentYear = now()->year;
+
+        // Check if an invoice already exists for the current month and year
+        $existingInvoice = Factures::where('contrat_id', $contrat)
+            ->whereMonth('created_at', $currentMonth)
+            ->whereYear('created_at', $currentYear)
+            ->first();
+
+        if ($existingInvoice) {
+            return redirect()->back()->with('error', 'Une facture pour ce mois a déjà été générée.');
+        }
 
         $facture = new Factures();
         $facture->numero_facture = now()->format('Ymd') . "_".$contrat."_". str_pad(Factures::count() + 1, 4, '0', STR_PAD_LEFT);
         $facture->payement_date = $request->payement_date;
         $facture->montant_facture = $request->montant_facture;
         $facture->periode_facture = $request->period;
-//        $facture->contrat_id = $contrat->id;
-        $facture->contrat_id =$contrat;
+        $facture->contrat_id = $contrat;
         $facture->save();
 
         return redirect()->route('factures.index')->with('success', 'Facture créée avec succès.');
