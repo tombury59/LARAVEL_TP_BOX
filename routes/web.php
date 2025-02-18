@@ -67,6 +67,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/impots', [ImpotsController::class, 'showCalculations'])->name('impots.calculations');
 
+    Route::get('/contrats/{id}/pdf', [ModeleContratController::class, 'downloadPDF'])->name('contrats.pdf');
+
 });
 
 require __DIR__.'/auth.php';
