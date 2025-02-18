@@ -117,6 +117,55 @@ class LocatairesController extends Controller
         }
     }
 
+    public function exportCSV()
+    {
+        $locataires = Locataires::all();
 
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => 'no-cache',
+            'Cache-Control' => 'must-revalidate, post-check=0, pre-check=0',
+            'Expires' => '0'
+        ];
+
+        $callback = function() use ($locataires) {
+            $handle = fopen('php://output', 'w');
+
+            // Add UTF-8 BOM for proper French character encoding
+            fprintf($handle, chr(0xEF).chr(0xBB).chr(0xBF));
+
+            // Headers
+            fputcsv($handle, [
+                'Nom',
+                'Prénom',
+                'Email',
+                'Téléphone',
+                'Adresse',
+                'Code Postal',
+                'Ville',
+                'Pays',
+                'Mode de paiement'
+            ]);
+
+            // Data rows
+            foreach ($locataires as $locataire) {
+                fputcsv($handle, [
+                    $locataire->nom,
+                    $locataire->prenom,
+                    $locataire->email,
+                    $locataire->telephone,
+                    $locataire->adresse,
+                    $locataire->code_postal,
+                    $locataire->ville,
+                    $locataire->pays,
+                    $locataire->payement
+                ]);
+            }
+
+            fclose($handle);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
 
 }
