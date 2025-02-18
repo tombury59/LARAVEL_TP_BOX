@@ -68,7 +68,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/impots', [ImpotsController::class, 'showCalculations'])->name('impots.calculations');
 
     Route::get('/contrats/{id}/pdf', [ModeleContratController::class, 'downloadPDF'])->name('contrats.pdf');
-
+    Route::get('/locataires/export-csv', [LocatairesController::class, 'exportCSV'])->name('locataires.export-csv');
 });
 
 require __DIR__.'/auth.php';
