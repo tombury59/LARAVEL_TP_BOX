@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Boxes;
+use App\Models\ContractTemplate;
 use App\Models\Locataires;
 use App\Models\Reserverboxes;
 use App\Models\Typepayement;
@@ -32,6 +33,26 @@ class DatabaseSeeder extends Seeder
 
         Locataires::factory(20)->create();
         Reserverboxes::factory(10)->create();
+
+        Boxes::factory()->create([
+            'proprietaire_id' => 1,
+            'name' => "Boxe de stockage simple",
+            'description' => "Boxe de stockage simple",
+            'address' => "1 rue de la paix",
+            'price' => 50,
+            'status' => 1,
+            'taille' => 10
+        ]);
+
+        Boxes::factory()->create([
+            'proprietaire_id' => 2,
+            'name' => "Boxe de stockage coloré",
+            'description' => "Boxe de stockage coloré",
+            'address' => "5 rue de la paix",
+            'price' => 5000,
+            'status' => 1,
+            'taille' => 100
+        ]);
 
     }
 }
