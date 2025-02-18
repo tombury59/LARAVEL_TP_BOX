@@ -29,7 +29,7 @@ class LocatairesController extends Controller
     {
         $locataire=Locataires::find($id);
         $boxeslocataires=$locataire->boxes()->get();
-        $reservations=$locataire->reservation()->get();
+        $reservations=$locataire->reservations()->get();
 
         return view('locataire.locataire',compact('locataire','boxeslocataires','reservations'));
     }

@@ -8,12 +8,12 @@
     <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="flex justify-between mb-4">
-                <a href="{{ route('locataires.create') }}" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-700 transition-colors duration-300">
+                <a href="{{ route('locataires.create') }}" class="px-4 py-2 bg-green-400 text-white rounded-md hover:bg-green-700 transition-colors duration-300">
                     Ajouter un Locataire
                 </a>
                 <form method="GET" action="{{ route('locataires.index') }}" class="flex">
                     <input type="text" name="search" value="{{ request('search') }}" placeholder="Rechercher par nom" class="px-4 py-2 border rounded-l-md">
-                    <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-r-md hover:bg-blue-700 transition-colors duration-300">
+                    <button type="submit" class="px-4 py-2 bg-blue-400 text-white rounded-r-md hover:bg-blue-700 transition-colors duration-300">
                         Rechercher
                     </button>
                 </form>

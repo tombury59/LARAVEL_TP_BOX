@@ -45,7 +45,7 @@
                                 <td class="py-3 px-4 border-b dark:border-gray-700">{{ $reservation->date_debut }}</td>
                                 <td class="py-3 px-4 border-b dark:border-gray-700">{{ $reservation->date_fin }}</td>
                                 <td class="py-3 px-4 border-b dark:border-gray-700">
-                                    <button class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
+                                    <button class="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-700">
                                         <a href="{{route('factures.show_create_factures_monthly',$reservation->id)}}">Générer</a>
                                     </button>
                                 </td>
