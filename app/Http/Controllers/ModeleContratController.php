@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\ContractTemplate;
 use App\Models\Contrat;
 use App\Models\Reserverboxes;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -110,4 +111,17 @@ class ModeleContratController extends Controller
             return redirect()->route('reservations.reservations')->with('error', 'Contrat non-trouvé.');
         }
     }
+
+    public function downloadPDF($id)
+    {
+        $contrat = Contrat::with(['reservation'])->findOrFail($id);
+
+        $pdf = PDF::loadView('contrat.pdf', [
+            'contrat' => $contrat,
+            'content' => json_decode($contrat->contenu, true)
+        ]);
+
+        return $pdf->download('contrat-' . $contrat->id . '.pdf');
+    }
+
 }
