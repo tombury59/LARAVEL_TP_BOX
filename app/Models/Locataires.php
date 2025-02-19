@@ -30,11 +30,11 @@ class Locataires extends Model
 
     public function reservations()
     {
-        return $this->hasMany(ReserverBoxes::class, 'locataire_id', 'id');
+        return $this->hasMany(Reserverboxes::class, 'locataire_id', 'id');
     }
 
     public function typePayement()
     {
-        return $this->belongsTo(TypePayement::class, 'payemement', 'id');
+        return $this->belongsTo(Typepayement::class, 'payemement', 'id');
     }
 }

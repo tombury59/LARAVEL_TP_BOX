@@ -41,7 +41,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/locataires', [LocatairesController::class, 'index'])->name('locataires.index');
     Route::get('/locataire/create', [LocatairesController::class, 'create'])->name('locataires.create');
     Route::post('/locataire', [LocatairesController::class, 'store'])->name('locataires.store');
+
+    // Route en cours de réparation
     Route::get('/locataire/{id}', [LocatairesController::class, 'show'])->name('locataires.show');
+
     Route::get('/locataire/edit/{id}', [LocatairesController::class, 'edit'])->name('locataires.edit');
     Route::put('/locataire/edit/{id}', [LocatairesController::class, 'update'])->name('locataires.update');
     Route::delete('/locataire/{id}', [LocatairesController::class, 'destroy'])->name('locataires.destroy');
